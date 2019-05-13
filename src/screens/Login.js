@@ -10,10 +10,20 @@ import {
 } from 'react-native';
   import colors from '../styles/colors'; 
   import InputField from '../components/forms/InputField';
+  import NextArrowButton from  '../components/buttons/NextArrowButton';
+  import Notification  from '../components/Notification';
+
   export default class Login extends Component {
+            handleNextButton(){
+                    alert('Next Button Pressed');
+            }
       render(){
+        
           return(
-            <KeyboardAvoidingView style={styles.wrapper}>
+            <KeyboardAvoidingView  
+            style={styles.wrapper}
+            behavior = 'padding'
+            >
             <View style = {styles.scrollViewWrapper}>
                 <ScrollView style ={styles.scrollView}>
                     <Text style = {styles.loginHeader}>  
@@ -22,10 +32,11 @@ import {
                     <InputField 
                     labelText="Email Address"
                     labelTextSize={14}
-                    labelColor = { colors.white}
+                    labelColor = { colors.white} 
                     textColor={colors.white}
                     borderBottomColor = {colors.white}
                     inputType = "email"
+                    custonStyle= {{marginBottom: 30}}
                     />
 
                     <InputField 
@@ -35,9 +46,22 @@ import {
                     textColor={colors.white}
                     borderBottomColor = {colors.white}
                     inputType = "password"
+                    custonStyle= {{marginBottom: 30}}
                     />
                 </ScrollView>
-            </View>
+                <View style={styles.NextButton}>
+                    <NextArrowButton 
+                        handleNextButton={this.handleNextButton}/>
+                </View>
+                <View>
+                    <Notification
+                        type="Error"
+                        firstLine="Those credentials don't look right."
+                        secondLine="Please try again."
+
+                        />
+                </View>
+            </View>         
             </KeyboardAvoidingView>
           )
           
@@ -62,10 +86,15 @@ import {
 
     },
     scrollView: {
-        paddingLeft: 30,
+        paddingLeft: 30, 
         paddingRight: 30,
         paddingTop: 20,
-    }
+    },
+    NextButton :{
+        alignItems: 'flex-end',
+        bottom: 10,
+        right: 20,
+    },
 
 
   })
