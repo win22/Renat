@@ -14,14 +14,27 @@ import {
   import Notification  from '../components/Notification';
 
   export default class Login extends Component {
-            handleNextButton(){
-                    alert('Next Button Pressed');
+        constructor(props){
+            super(props);
+            this.state = {
+                formValid: false,
             }
+            this.handleCloseNotification =  this.handleCloseNotification.bind(this);
+        }
+
+      handleNextButton(){
+       alert('Next Button Pressed');
+     }
+     handleCloseNotification(){
+     this.setState({ formValid : true })
+   }
       render(){
-        
+          const { formValid } = this.state;
+          const showNotification = formValid ? false : true;
+          const background = formValid ? colors.green01 : colors.darkOrange;
           return(
             <KeyboardAvoidingView  
-            style={styles.wrapper}
+            style={[{backgroundColor: background },styles.wrapper]}
             behavior = 'padding'
             >
             <View style = {styles.scrollViewWrapper}>
@@ -53,11 +66,14 @@ import {
                     <NextArrowButton 
                         handleNextButton={this.handleNextButton}/>
                 </View>
-                <View>
+                <View style={showNotification ? {marginTop: 10} : {} }>
                     <Notification
-                        type="Error"
+                        showNotification={showNotification}
+                        handleCloseNotification = {this.handleCloseNotification}
+                        type="Error :"
                         firstLine="Those credentials don't look right."
                         secondLine="Please try again."
+                        
 
                         />
                 </View>
@@ -72,7 +88,6 @@ import {
     wrapper: {
     display: 'flex',
     flex: 1,
-    backgroundColor: colors.green01,
     },
     scrollViewWrapper:{
         marginTop: 70,
@@ -95,6 +110,4 @@ import {
         bottom: 10,
         right: 20,
     },
-
-
   })
